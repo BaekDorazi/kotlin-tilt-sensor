@@ -12,12 +12,16 @@ import android.util.Log
 import android.view.WindowManager
 
 class MainActivity : AppCompatActivity(), SensorEventListener {
+    private lateinit var tiltView: TiltView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE //화면 가로로 고정
         window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON) //화면 안꺼지도록
+
+        tiltView = TiltView(this)
+        setContentView(tiltView)
     }
 
     private val sensorManager by lazy {
@@ -39,7 +43,6 @@ class MainActivity : AppCompatActivity(), SensorEventListener {
     }
 
     override fun onAccuracyChanged(sensor: Sensor?, accuracy: Int) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
     /**
@@ -54,6 +57,8 @@ class MainActivity : AppCompatActivity(), SensorEventListener {
                 "Debug",
                 "onSensorChanged: x : ${event.values[0]}, y : ${event.values[1]}, z: ${event.values[2]}"
             )
+
+            tiltView.onSensorEvent(event)
         }
     }
 }
