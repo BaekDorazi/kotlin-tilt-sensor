@@ -1,6 +1,7 @@
 package com.baek.tiltsensor
 
 import android.content.Context
+import android.content.pm.ActivityInfo
 import android.hardware.Sensor
 import android.hardware.SensorEvent
 import android.hardware.SensorEventListener
@@ -8,12 +9,15 @@ import android.hardware.SensorManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.WindowManager
 
 class MainActivity : AppCompatActivity(), SensorEventListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE //화면 가로로 고정
+        window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON) //화면 안꺼지도록
     }
 
     private val sensorManager by lazy {
